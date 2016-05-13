@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Free S-wifi</title>
+    <link rel="stylesheet" type="text/css" href="/hotspot/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/hotspot/jquery-ui.css"> 
+    <script type="application/javascript" src="/hotspot/jquery-1.11.1.js"></script>
+    <script type="application/javascript" src="/hotspot/jquery-ui.js"></script>
+    <script type="application/javascript" src="/hotspot/ChilliLibrary.js"></script>
+</head>
+<body>
+  <div class="wrapper" style="min-height:100%;text-align:center;margin: 0 auto;">
+    <div id="divContent">
+       <a id="swf_a_ads" onclick="connect();" href="javascript:void(0)"><img id="swf_img_ads" border="0" width="1024" height="768" title="" alt="" src="/hotspot/9aef63dd06e0cd3ea7f309eccd6d12f1.jpg"></a>
+    </div>
+  </div> 
+  <script type="application/javascript">
+    function resize(){
+	var w = screen.width;
+	var hei = screen.height;
+	$('#swf_img_ads').removeAttr('width');
+	$('#swf_img_ads').removeAttr('height');
+	if(w<hei){
+		$('#swf_img_ads').css('width','100%');
+ 		$('#swf_img_ads').css('height','auto');
+	}
+	else{
+		$('#swf_img_ads').css('width','auto');
+		if($(window).height()>300)
+		$('#swf_img_ads').height($(window).height());
+		else $('#swf_img_ads').height(300);
+	}
+    }
+    $(window).on('load resize',function(){
+	resize();
+    });
+    //config login
+    chilliController.host = "10.1.0.1"; // Hard Coding - not a good idea
+    chilliController.port = "3990";
+    chilliController.interval = 60;
+    chilliController.typeUser = 'click_to_connect';
+    chilliController.ident='greatsecret';
+    chilliController.onError = handleErrors;
+    chilliController.accountServer='http://auth3.s-wifi.vn/getaccount';
+    chilliController.apType = 'Chilli';
+    
+    function handleErrors (code) {
+        //alert('' + code );
+    }
+    function getParameterByName(name) {
+      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }
+    function connect() {
+      var username =  "click_to_connect";
+      var password =  "click_to_connect";
+      var reBool = getParameterByName('userurl');
+      var redirect = (reBool.length == 0)?'http://s-wifi.vn/':reBool;
+      alert("You are connected!");
+      chilliController.redirect=redirect;
+      chilliController.logon();
+    }
+    function logoff() {
+      
+      alert("You are disconnected!");
+      chilliController.redirect='http://zing.vn';
+      chilliController.logoff();
+    }
+    logoff();
+  </script>
+</body>
+</html>

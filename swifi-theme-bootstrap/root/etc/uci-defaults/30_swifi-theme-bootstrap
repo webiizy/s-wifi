@@ -1,0 +1,7 @@
+#!/bin/sh
+uci batch <<-EOF
+	set luci.themes.SwifiBootstrap=/luci-static/swifi-bootstrap
+	set luci.main.mediaurlbase=/luci-static/swifi-bootstrap
+	commit luci
+EOF
+exit 0
